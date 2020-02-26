@@ -5,6 +5,7 @@
 	> Created Time: 2020年02月26日 星期三 12时15分04秒
  ************************************************************************/
 
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -54,3 +55,39 @@ Node *erase(Node *root, int key) {
     return root;
 }
 
+void _inorder(Node *node) {
+    if (node == NULL) return ;
+    _inorder(node->lchild);
+    printf("%d ", node->key);
+    _inorder(node->rchild);
+    return ;
+}
+
+void inorder(Node *node) {
+    printf("inorder : ");
+    _inorder(node);
+    printf("\n");
+    return ;
+}
+
+void clear(Node *node) {
+    if (node == NULL) return ;
+    clear(node->lchild);
+    clear(node->rchild);
+    free(node);
+    return ;
+}
+
+int main() {
+    int op, val;
+    Node *node = NULL;
+    while (scanf("%d%d", &op, &val)) {
+        switch (op) {
+            case 1: node = insert(node, val); break;
+            case 2: node = erase(node, val); break;
+        }
+        inorder(node);
+    }
+    clear(node);
+    return 0;
+}
