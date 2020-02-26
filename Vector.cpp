@@ -5,6 +5,7 @@
 	> Created Time: 2020年02月26日 星期三 12时20分19秒
  ************************************************************************/
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -54,3 +55,52 @@ int delete1(Vector *v, int loc) {
 int reaserch(Vector *v, int val) {
     if (v->length == 0) return 0;
     for (int i = 0; i < v->length; i++) {
+        if (v->data[i] == val) return 1;
+    }
+    return 0;
+}
+
+void output(Vector *v) {
+    if (v->length == 0) return ;
+    printf("Vector(%d) = [", v->length);
+    for (int i = 0; i < v->length; i++) {
+        i && printf(" ");
+        printf("%d", v->data[i]);
+    }
+    printf("]\n");
+}
+
+void clear(Vector *v) {
+    if (v->length == 0) return ;
+    free(v->data);
+    free(v);
+}
+
+int main() {
+    srand(time(0));
+    #define max_op 20
+    Vector *v = (Vector *)malloc(sizeof(Vector));
+    init(v, max_op);
+    int op, loc, val;
+    for (int i = 0; i < max_op; i++) {
+        op = rand() % 4;
+        loc = rand() % (v->length + 3) - 1;
+        val = rand() % 100;
+        switch (op) {
+            case 0:  
+            case 1: {
+                printf("insert %d at %d to Vector = %d\n", val, loc, insert(v, loc, val));
+            } break;
+            case 2: {
+                printf("delete item at %d from Vector = %d\n", loc, delete1(v, loc));
+            } break;
+            case 3: {
+                printf("reaserch %d at Vector = %d\n", val, reaserch(v, val));
+            } break;
+        }
+        output(v);
+        printf("\n");
+    }
+    clear(v);
+    return 0;
+}
