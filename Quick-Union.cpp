@@ -30,7 +30,7 @@ UnionSet *init(int n) {
     return u;
 }
 
-int find(UnionSet *u, int x) {//路径优化
+int find(UnionSet *u, int x) {//路径压缩
     return u->father[x] = (u->father[x] == x ? x : find(u, u->father[x]));
 }
 
